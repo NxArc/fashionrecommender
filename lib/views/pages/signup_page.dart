@@ -60,7 +60,7 @@ class _SignupPageState extends State<SignupPage> {
             ),
             SizedBox(height: 4),
             Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
+              'Lorem ipsum dolor sit amet',
               style: TextStyle(fontSize: 12),
             ),
             SizedBox(height: 140),
