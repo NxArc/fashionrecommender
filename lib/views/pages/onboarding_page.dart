@@ -1,17 +1,17 @@
-import 'package:fasionrecommender/data/notifiers.dart';
-import 'package:fasionrecommender/views/pages/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:fasionrecommender/controllers/onboarding_page_controller.dart';
 
 class OnboardingPage extends StatefulWidget {
-  const OnboardingPage({super.key});
-
+  final VoidCallback onFinish;
+  const OnboardingPage({super.key, required this.onFinish});
   @override
   State<OnboardingPage> createState() => _OnboardingPageState();
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
   int _currentIndex = 0;
-  int counter = 0;
+  final controller = OnboardingPageController();
+
   final List<String> titles = [
     'Create your own style now',
     'Style Smarter, Slay Everyday',
@@ -24,30 +24,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
     'Get personalized recommendations for any event — from casual to chic, we’ve got you covered!',
   ];
 
-  void _nextText(BuildContext context) {
-    if (counter < 2) {
-      setState(() {
-        _currentIndex = (_currentIndex + 1) % titles.length;
-        counter++;
-      });
-    } else {
-      selectPageNotifier.value = 1;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      ); // Navigate to LoginPage
-    }
-  }
-
-  void _goBack(BuildContext context) {
-    if (counter > 0) {
-      setState(() {
-        _currentIndex = (_currentIndex - 1 + titles.length) % titles.length;
-        counter--;
-      });
-    } else {
-      Navigator.pop(context); // Optional
-    }
+  void _updateState(int newIndex, int newCounter) {
+    setState(() {
+      _currentIndex = newIndex;
+      controller.counter = newCounter;
+    });
   }
 
   @override
@@ -66,7 +47,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
         backgroundColor: Colors.transparent,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: _currentIndex == 0 ? null : () => _goBack(context),
+          onPressed:
+              _currentIndex == 0
+                  ? null
+                  : () => controller.goBack(
+                    context: context,
+                    currentIndex: _currentIndex,
+                    totalPages: titles.length,
+                    updateState: _updateState,
+                  ),
         ),
       ),
       body: Stack(
@@ -109,7 +98,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       ),
                       const SizedBox(height: 32),
                       ElevatedButton(
-                        onPressed: () => _nextText(context),
+                        onPressed:
+                            () => controller.nextText(
+                              context: context,
+                              currentIndex: _currentIndex,
+                              totalPages: titles.length,
+                              onFinish: widget.onFinish,
+                              updateState: _updateState,
+                            ),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                             horizontal: buttonPadding * 5,

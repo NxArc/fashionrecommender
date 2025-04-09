@@ -20,7 +20,6 @@ class _OotdState extends State<Ootd> {
   Widget build(BuildContext context) {
     // Get the screen size for responsive design
     final screenSize = MediaQuery.of(context).size;
-    
     return Padding(
       padding: const EdgeInsets.all(20),
       child: ValueListenableBuilder(
@@ -95,17 +94,6 @@ class _OotdState extends State<Ootd> {
                               SizedBox(width: 8),
                               Icon(Icons.wb_sunny, color: Colors.orange, size: screenSize.width * 0.06), // Responsive icon
                             ],
-                          ),
-                          SizedBox(height: screenSize.height * 0.01),
-                          Text(
-                            'OOTD calendar',
-                            style: TextStyle(fontSize: screenSize.width * 0.035, color: Colors.grey[600]),
-                          ),
-                          SizedBox(height: screenSize.height * 0.01),
-                          Icon(
-                            Icons.calendar_month,
-                            size: screenSize.width * 0.08, // Responsive icon size
-                            color: Colors.black87,
                           ),
                         ],
                       ),

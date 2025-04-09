@@ -1,12 +1,11 @@
+import 'package:fasionrecommender/controllers/login_page_controller.dart';
 import 'package:fasionrecommender/data/notifiers.dart';
-import 'package:fasionrecommender/views/pages/homepage.dart';
-import 'package:fasionrecommender/views/pages/signup_page.dart';
+import 'package:fasionrecommender/views/pages/authenticate/signup_page.dart';
 import 'package:fasionrecommender/views/widget/appbar.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
-
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -22,7 +21,6 @@ class _LoginPageState extends State<LoginPage> {
     double spacing = isTablet ? 32 : 24;
     double inputFontSize = isTablet ? 18 : 14;
     double buttonPaddingH = isTablet ? 140 : 120;
-
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomAppBar(),
@@ -54,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 48),
                     TextField(
+                      controller: emailController,
                       style: TextStyle(fontSize: inputFontSize),
                       decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.mail),
@@ -65,6 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 24),
                     TextField(
+                      controller: passwordController,
                       style: TextStyle(fontSize: inputFontSize),
                       obscureText: true,
                       decoration: InputDecoration(
@@ -106,11 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                               alignment: Alignment.center,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  selectPageNotifier.value = 3;
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Home(),),
-                                  );
+                                  signInwithEmailAndPassword();
                                 },
                                 style: ElevatedButton.styleFrom(
                                   padding: EdgeInsets.symmetric(

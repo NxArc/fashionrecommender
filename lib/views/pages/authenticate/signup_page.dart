@@ -1,3 +1,4 @@
+import 'package:fasionrecommender/controllers/signup_page_controller.dart';
 import 'package:fasionrecommender/data/notifiers.dart';
 import 'package:fasionrecommender/views/widget/appbar.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +10,8 @@ class SignupPage extends StatefulWidget {
   State<SignupPage> createState() => _SignupPageState();
 }
 
+
 class _SignupPageState extends State<SignupPage> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
   String passwordError = '';
   String emailError = '';
@@ -44,7 +44,7 @@ class _SignupPageState extends State<SignupPage> {
 
             // Email Field
             TextField(
-              controller: emailController,
+              controller: signup_emailController,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.mail),
                 labelText: 'Enter Your Email',
@@ -56,7 +56,6 @@ class _SignupPageState extends State<SignupPage> {
                 ),
               ),
             ),
-
             // Email Error Message (reserved space)
             SizedBox(
               height: 24,
@@ -69,7 +68,7 @@ class _SignupPageState extends State<SignupPage> {
             ),
             // Password Field
             TextField(
-              controller: passwordController,
+              controller: signup_passwordController,
               obscureText: true,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.lock),
@@ -123,12 +122,6 @@ class _SignupPageState extends State<SignupPage> {
                       alignment: Alignment.center,
                       child: ElevatedButton(
                         onPressed: () {
-                          setState(() {
-                            emailEmpty = emailController.text.isEmpty;
-                            passwordMismatch = passwordController.text !=
-                                confirmpasswordController.text;
-                          });
-
                           if (emailEmpty) {
                             setState(() {
                               emailError = "Please input your email";
@@ -146,9 +139,8 @@ class _SignupPageState extends State<SignupPage> {
                           }
 
                           if (!emailEmpty && !passwordMismatch) {
-                            String email = emailController.text;
-                            String password = passwordController.text;
-                            // Proceed with signup logic here
+                            createUserWithEmailAndPassword();
+                            passwordError = 'Successfully Signed Up!';
                           }
                         },
                         style: ElevatedButton.styleFrom(
