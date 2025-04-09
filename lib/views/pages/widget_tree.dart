@@ -1,9 +1,10 @@
 import 'package:fasionrecommender/data/notifiers.dart';
+import 'package:fasionrecommender/views/pages/homepage.dart';
 import 'package:fasionrecommender/views/pages/login_page.dart';
 import 'package:fasionrecommender/views/pages/onboarding_page.dart';
 import 'package:fasionrecommender/views/pages/signup_page.dart';
 import 'package:flutter/material.dart';
-List<Widget> pages = [OnboardingPage(), LoginPage(), SignupPage()];
+List<Widget> pages = [OnboardingPage(), LoginPage(), SignupPage(),Home()];
 
 class WidgetTree extends StatelessWidget {
   const WidgetTree({super.key});

@@ -1,4 +1,5 @@
 import 'package:fasionrecommender/data/notifiers.dart';
+import 'package:fasionrecommender/views/widget/appbar.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,36 +13,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Image(
-          image: AssetImage(
-            'assets/images/app_logo.png', // Default logo
-          ),
-          height: 55,
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            if (selectPageNotifier != 0) {
-              selectPageNotifier.value = 0;
-            }
-          },
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              isDarkModeNotifier.value = !isDarkModeNotifier.value;
-            },
-            icon: ValueListenableBuilder(
-              valueListenable: isDarkModeNotifier,
-              builder: (context, isDarkmode, child) {
-                return Icon(isDarkmode ? Icons.dark_mode : Icons.light_mode);
-              },
-            ),
-          ),
-        ],
-      ),
+      resizeToAvoidBottomInset: true,
+      appBar: CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, top: 40),
         child: Column(
@@ -53,11 +26,13 @@ class _LoginPageState extends State<LoginPage> {
               textAlign: TextAlign.left,
             ),
             SizedBox(height: 4),
-            Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
-              style: TextStyle(fontSize: 12),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 70),
+              child: Text(
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
+                style: TextStyle(fontSize: 12),
+              ),
             ),
-            SizedBox(height: 140),
             TextField(
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.mail),
@@ -103,7 +78,9 @@ class _LoginPageState extends State<LoginPage> {
                     Align(
                       alignment: Alignment.center,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          selectPageNotifier.value = 3;
+                        },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 120,

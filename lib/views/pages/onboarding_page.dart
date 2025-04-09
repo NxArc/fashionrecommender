@@ -65,7 +65,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
       appBar: AppBar(
         title: const Text('Welcome'),
         centerTitle: true,
-        //backgroundColor: Colors.transparent
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed:
@@ -93,16 +92,28 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    titles[_currentIndex],
-                    textAlign: TextAlign.center,
-                    style: titleStyles[_currentIndex],
+                  // Title with animation
+                  AnimatedSwitcher(
+                    switchInCurve: Curves.bounceIn,
+                    duration: const Duration(milliseconds: 500), // Set the animation duration
+                    child: Text(
+                      titles[_currentIndex],
+                      key: ValueKey<int>(_currentIndex), // Unique key for each text change
+                      textAlign: TextAlign.center,
+                      style: titleStyles[_currentIndex],
+                    ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    subtitles[_currentIndex],
-                    textAlign: TextAlign.center,
-                    style: subtitleStyles[_currentIndex],
+                  // Subtitle with animation
+                  AnimatedSwitcher(
+                    switchInCurve: Curves.bounceIn,
+                    duration: const Duration(milliseconds: 500), // Set the animation duration
+                    child: Text(
+                      subtitles[_currentIndex],
+                      key: ValueKey<int>(_currentIndex), // Unique key for each text change
+                      textAlign: TextAlign.center,
+                      style: subtitleStyles[_currentIndex],
+                    ),
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(

@@ -1,4 +1,5 @@
 import 'package:fasionrecommender/data/notifiers.dart';
+import 'package:fasionrecommender/views/widget/appbar.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
@@ -20,34 +21,8 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Image(
-          image: AssetImage(
-            'assets/images/app_logo.png', // Default logo
-          ),
-          height: 55,
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            selectPageNotifier.value = 1;
-          },
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              isDarkModeNotifier.value = !isDarkModeNotifier.value;
-            },
-            icon: ValueListenableBuilder(
-              valueListenable: isDarkModeNotifier,
-              builder: (context, isDarkmode, child) {
-                return Icon(isDarkmode ? Icons.dark_mode : Icons.light_mode);
-              },
-            ),
-          ),
-        ],
-      ),
+      resizeToAvoidBottomInset: true,
+      appBar: CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, top: 40),
         child: Column(
@@ -59,11 +34,13 @@ class _SignupPageState extends State<SignupPage> {
               textAlign: TextAlign.left,
             ),
             SizedBox(height: 4),
-            Text(
-              'Lorem ipsum dolor sit amet',
-              style: TextStyle(fontSize: 12),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 70),
+              child: Text(
+                'Lorem ipsum dolor sit amet',
+                style: TextStyle(fontSize: 12),
+              ),
             ),
-            SizedBox(height: 140),
             TextField(
               controller: emailController,
               decoration: InputDecoration(
