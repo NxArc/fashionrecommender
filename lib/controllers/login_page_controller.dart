@@ -147,7 +147,6 @@ class _LoginPageState extends State<LoginPage> {
                                 color: Colors.transparent,
                                 child: InkWell(
                                   onTap: () {
-                                    selectPageNotifier.value = 2;
                                     Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => SignupPage(),),

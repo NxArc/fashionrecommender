@@ -1,4 +1,5 @@
 import 'package:fasionrecommender/data/notifiers.dart';
+import 'package:fasionrecommender/views/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -11,7 +12,6 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   int _currentIndex = 0;
   int counter = 0;
-
   final List<String> titles = [
     'Create your own style now',
     'Style Smarter, Slay Everyday',
@@ -24,18 +24,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
     'Get personalized recommendations for any event — from casual to chic, we’ve got you covered!',
   ];
 
-  final List<TextStyle> titleStyles = [
-    TextStyle(fontSize: 42, fontWeight: FontWeight.bold, color: Colors.white),
-    TextStyle(fontSize: 36, fontWeight: FontWeight.w600, color: Colors.white),
-    TextStyle(fontSize: 38, fontWeight: FontWeight.w500, color: Colors.white),
-  ];
-
-  final List<TextStyle> subtitleStyles = [
-    TextStyle(fontSize: 16, fontStyle: FontStyle.normal, color: Colors.white),
-    TextStyle(fontSize: 16, fontStyle: FontStyle.italic, color: Colors.white),
-    TextStyle(fontSize: 16, fontStyle: FontStyle.normal, color: Colors.white),
-  ];
-
   void _nextText(BuildContext context) {
     if (counter < 2) {
       setState(() {
@@ -43,7 +31,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
         counter++;
       });
     } else {
-      selectPageNotifier.value = 1; // Navigate to LoginPage after the 3rd click
+      selectPageNotifier.value = 1;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      ); // Navigate to LoginPage
     }
   }
 
@@ -54,79 +46,86 @@ class _OnboardingPageState extends State<OnboardingPage> {
         counter--;
       });
     } else {
-      Navigator.pop(context); // Go back to the previous page
+      Navigator.pop(context); // Optional
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isTablet = size.width >= 600;
+    double titleSize = isTablet ? 48 : 36;
+    double subtitleSize = isTablet ? 20 : 16;
+    double buttonPadding = isTablet ? 32 : 16;
+
     return Scaffold(
-      extendBodyBehindAppBar: true, // Allows content behind the appbar
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text('Welcome'),
         centerTitle: true,
+        backgroundColor: Colors.transparent,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed:
-              _currentIndex == 0
-                  ? null // disables the button visually and functionally
-                  : () => _goBack(context),
+          onPressed: _currentIndex == 0 ? null : () => _goBack(context),
         ),
-        backgroundColor: Colors.transparent
       ),
       body: Stack(
         children: [
-          // Background image
           Positioned.fill(
             child: Image.asset(
               'assets/images/onboard-bg.jpg',
               fit: BoxFit.cover,
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 75.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Title with animation
-                  AnimatedSwitcher(
-                    switchInCurve: Curves.bounceIn,
-                    duration: const Duration(milliseconds: 500), // Set the animation duration
-                    child: Text(
-                      titles[_currentIndex],
-                      key: ValueKey<int>(_currentIndex), // Unique key for each text change
-                      textAlign: TextAlign.center,
-                      style: titleStyles[_currentIndex],
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  // Subtitle with animation
-                  AnimatedSwitcher(
-                    switchInCurve: Curves.bounceIn,
-                    duration: const Duration(milliseconds: 500), // Set the animation duration
-                    child: Text(
-                      subtitles[_currentIndex],
-                      key: ValueKey<int>(_currentIndex), // Unique key for each text change
-                      textAlign: TextAlign.center,
-                      style: subtitleStyles[_currentIndex],
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: () => _nextText(context),
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+          SafeArea(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 700),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        titles[_currentIndex],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: titleSize,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    child: const Text('Continue'),
+                      const SizedBox(height: 16),
+                      Text(
+                        subtitles[_currentIndex],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: subtitleSize,
+                          fontStyle: FontStyle.normal,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      ElevatedButton(
+                        onPressed: () => _nextText(context),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: buttonPadding * 5,
+                            vertical: buttonPadding,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          backgroundColor: Colors.black,
+                          foregroundColor: Colors.white,
+                        ),
+                        child: const Text('Continue'),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),

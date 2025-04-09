@@ -18,6 +18,9 @@ class _OotdState extends State<Ootd> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the screen size for responsive design
+    final screenSize = MediaQuery.of(context).size;
+    
     return Padding(
       padding: const EdgeInsets.all(20),
       child: ValueListenableBuilder(
@@ -25,7 +28,7 @@ class _OotdState extends State<Ootd> {
         builder: (context, value, child) {
           return Container(
             decoration: BoxDecoration(
-              color: value? Colors.white : Colors.white70,
+              color: value ? Colors.white : Colors.white70,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
@@ -36,16 +39,16 @@ class _OotdState extends State<Ootd> {
               ],
             ),
             child: SizedBox(
-              height: 220,
+              height: screenSize.height * 0.3, // Adjust height based on screen size
               child: Row(
                 children: [
                   // Left side
                   Expanded(
                     flex: 3,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 25,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenSize.width * 0.05, // Responsive horizontal padding
+                        vertical: screenSize.height * 0.03, // Responsive vertical padding
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,55 +56,55 @@ class _OotdState extends State<Ootd> {
                           Text(
                             'Today, ${DateFormat('MMM').format(now)} ${now.day}',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: screenSize.width * 0.045, // Responsive font size
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: screenSize.height * 0.01), // Responsive space
                           Row(
                             children: [
                               Icon(
                                 Icons.location_on,
-                                size: 18,
+                                size: screenSize.width * 0.05, // Responsive icon size
                                 color: Colors.black54,
                               ),
                               SizedBox(width: 4),
                               Text(
                                 location,
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: screenSize.width * 0.045, // Responsive text size
                                   color: Colors.black87,
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: screenSize.height * 0.01),
                           Text(
                             'Weather',
-                            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                            style: TextStyle(fontSize: screenSize.width * 0.035, color: Colors.grey[600]),
                           ),
                           Row(
                             children: [
                               Text(
                                 '$temp°C',
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: screenSize.width * 0.06, // Responsive font size
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               SizedBox(width: 8),
-                              Icon(Icons.wb_sunny, color: Colors.orange, size: 22),
+                              Icon(Icons.wb_sunny, color: Colors.orange, size: screenSize.width * 0.06), // Responsive icon
                             ],
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: screenSize.height * 0.01),
                           Text(
                             'OOTD calendar',
-                            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                            style: TextStyle(fontSize: screenSize.width * 0.035, color: Colors.grey[600]),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: screenSize.height * 0.01),
                           Icon(
                             Icons.calendar_month,
-                            size: 28,
+                            size: screenSize.width * 0.08, // Responsive icon size
                             color: Colors.black87,
                           ),
                         ],
@@ -113,10 +116,10 @@ class _OotdState extends State<Ootd> {
                   Expanded(
                     flex: 2,
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 20,
-                        right: 20,
-                        bottom: 20,
+                      padding: EdgeInsets.only(
+                        top: screenSize.height * 0.02, // Responsive padding
+                        right: screenSize.width * 0.05, // Responsive padding
+                        bottom: screenSize.height * 0.02, // Responsive padding
                       ),
                       child: Container(
                         decoration: BoxDecoration(
